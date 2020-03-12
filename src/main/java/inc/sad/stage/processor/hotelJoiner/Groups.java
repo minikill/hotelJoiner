@@ -19,11 +19,11 @@ import com.streamsets.pipeline.api.GenerateResourceBundle;
 import com.streamsets.pipeline.api.Label;
 
 /**
- * Config groups, which are displayed in UI.
+ * Config groups for displaing in UI
  */
 @GenerateResourceBundle
 public enum Groups implements Label {
-    HOTELS_DATA("Hotels Info");
+    HOTELS_DATA("Hotels Data");
 
     private final String label;
 

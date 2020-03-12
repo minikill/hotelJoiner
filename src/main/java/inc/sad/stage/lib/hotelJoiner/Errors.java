@@ -3,6 +3,9 @@ package inc.sad.stage.lib.hotelJoiner;
 import com.streamsets.pipeline.api.ErrorCode;
 import com.streamsets.pipeline.api.GenerateResourceBundle;
 
+/**
+ * Enum for handling errors inside of processor
+ */
 @GenerateResourceBundle
 public enum Errors implements ErrorCode {
 

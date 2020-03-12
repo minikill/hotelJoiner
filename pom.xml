@@ -13,6 +13,7 @@
         <streamsets.version>2.1.0.0</streamsets.version>
         <slf4j.version>1.7.7</slf4j.version>
         <junit.version>4.12</junit.version>
+        <powermock.version>1.7.4</powermock.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -55,6 +56,18 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- end -->
 
         <!-- Test Dependencies -->
@@ -62,6 +75,12 @@
             <groupId>com.streamsets</groupId>
             <artifactId>streamsets-datacollector-sdk</artifactId>
             <version>${streamsets.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

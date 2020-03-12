@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +20,24 @@ public abstract class HotelJoinerProcessor extends SingleLaneRecordProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(HotelJoinerProcessor.class);
 
+    /**
+     * Gives access for connection properties from UI
+     * @return
+     */
     public abstract String getHdfsURL();
     public abstract String getHdfsPath();
 
-    private Map<Long, String> hotelsMap;
+    /**
+     * Data store of hotels
+     */
+    private Map<Long, String> hotelsMap = new HashMap<>();
     private String[] headers;
 
     /** {@inheritDoc} */
     @Override
     protected List<ConfigIssue> init() {
         List<ConfigIssue> issues = super.init();
-        hotelsMap = initHotelsMap(issues);
+        initHotelsMap(issues);
         return issues;
     }
 
@@ -42,7 +47,10 @@ public abstract class HotelJoinerProcessor extends SingleLaneRecordProcessor {
         super.destroy();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * Processing each record for joining expedia and hotels data
+     */
     @Override
     protected void process(Record record, SingleLaneBatchMaker batchMaker) throws StageException {
         try {
@@ -68,12 +76,16 @@ public abstract class HotelJoinerProcessor extends SingleLaneRecordProcessor {
         }
     }
 
-    private Map<Long, String> initHotelsMap(List<ConfigIssue> issues) {
+    /**
+     * Method for initialization dataStore
+     * @param issues
+     * @return initialized map of hotels data
+     */
+    private void initHotelsMap(List<ConfigIssue> issues) {
         Configuration conf = new Configuration();
         conf.set("fs.default.name", getHdfsURL());
         conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
         conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
-        Map<Long, String> hotelsMap = new HashMap<>();
         LOG.info("Initialization started!");
         try (FileSystem fs = FileSystem.get(conf)) {
             Path path = new Path(getHdfsPath());
@@ -94,6 +106,5 @@ public abstract class HotelJoinerProcessor extends SingleLaneRecordProcessor {
                     .createConfigIssue(Groups.HOTELS_DATA.name(), "config", Errors.HOTELS_00, e.getMessage());
             issues.add(configIssue);
         }
-        return hotelsMap;
     }
 }

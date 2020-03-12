@@ -24,6 +24,9 @@ import com.streamsets.pipeline.api.ConfigGroups;
 import com.streamsets.pipeline.api.GenerateResourceBundle;
 import com.streamsets.pipeline.api.StageDef;
 
+/**
+ * Class for describing UI part of processor
+ */
 @StageDef(
         version = 1,
         label = "HotelJoiner Processor",
